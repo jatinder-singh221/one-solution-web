@@ -13,6 +13,7 @@ import { useFormik } from 'formik'
 import { ServiceDetailValidation } from '../validation'
 import { ProductsAndCatagories,RegisterProducts } from '../api'
 import { store } from '../App'
+import { name, address, phonenumber, pin } from './Registerservice'
 
 export default function Registerservice() {
 
@@ -179,31 +180,3 @@ export default function Registerservice() {
     )
 }
 
-const name = {
-    name: 'name',
-    id: 'name',
-    placeholder: 'Your shop, bussiness name',
-    label: 'Name',
-}
-
-const address = {
-    name: 'address',
-    id: 'address',
-    placeholder: 'Your shop, bussiness address with nearby land mark',
-    label: 'Address',
-}
-
-const phonenumber = {
-    name: 'phone_number',
-    id: 'phone_number',
-    placeholder: 'Bussiness phone number',
-    label: 'Phone Number',
-}
-
-const pin = {
-    name: 'pincode',
-    id: 'pincode',
-    placeholder: 'pin code',
-    label: 'Pin Code',
-    type: 'tel'
-}

@@ -207,3 +207,6 @@ const pin = {
     label: 'Pin Code',
     type: 'tel'
 }
+
+
+export { name, address, phonenumber, pin }

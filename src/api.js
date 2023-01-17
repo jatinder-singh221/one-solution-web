@@ -297,7 +297,173 @@ const RegisterProducts = async (formData) => {
         return {status: 500}
     }
 }
+
+const ImageUpload = async (formdata) => {
+    try {
+        const url = location + `/authenciation/update-profile`
+        const access = cookie.get('Session_AID')
+        const body = formdata
+        const api = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Accept': '*/*',
+                'Authorization': `Bearer ${access}`
+            },
+            body: body
+        })
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
+const DetailUpdate = async (formdata) => {
+    try {
+        const url = location + `/authenciation/account`
+        const access = cookie.get('Session_AID')
+        const body = JSON.stringify(formdata)
+        const api = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+            body: body
+        })
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
+const Myaccount = async () => {
+    try {
+        const url = location + `/authenciation/account`
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+        })
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
+const logoutUser = () => {
+    try {
+        cookie.remove('Session_AID', { path: '/', maxAge: new Date(0), sameSite: 'strict' })
+        cookie.remove('Session_RID', { path: '/', maxAge: new Date(0), sameSite: 'strict' })
+        return 200
+    } catch (error) {
+        return 500
+    }
+}
+
+const PasswordUpdate = async (formdata) => {
+    try {
+        const url = location + `/authenciation/update-password`
+        const access = cookie.get('Session_AID')
+        const body = JSON.stringify(formdata)
+        const api = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+            body: body
+        })
+        if (api.status === 200){
+            logoutUser()
+            return api
+        }
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
+
+const DeleteAccount = async () => {
+    try {
+        const url = location + `/authenciation/delete-account`
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'Delete',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+        })
+        logoutUser()
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
+const ServicesSlugList = async (slug) => {
+    try {
+        const url = location + `/services/service-provider-list/${slug}`
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
+const ProductsSlugList = async (slug) => {
+    try {
+        const url = location + `/products/product-seller-list/${slug}`
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
+const Search = async (query) => {
+    try {
+        const url = location + `/base/search?search=${query}`
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
 export { GetOtp, ValidateOtp, RegisterAsProfessional, login, signup, forgetPassword, 
 SessionStatus, ServicesList, ProductsList, Register, ServicesAndCatagories, ProductsAndCatagories,
-RegisterProducts
+RegisterProducts, ImageUpload, DetailUpdate, Myaccount, PasswordUpdate, logoutUser, DeleteAccount,
+ServicesSlugList, ProductsSlugList, Search
 }
