@@ -25,8 +25,8 @@ export default function SearchInput(props) {
         switch (api.status) {
             case 200:
                 const apiRes = await api.json()
-                if (apiRes.length > 0)
-                    setsearch(pre => ({ ...pre, api: apiRes.data }))
+                if (apiRes.data.length > 0)
+                    setsearch(pre => ({ ...pre, api: apiRes.data, value:apiRes.from }))
                 setlist(true)
                 break;
             default:
@@ -38,15 +38,15 @@ export default function SearchInput(props) {
     return (
         <form onSubmit={handleSubmit} className='transition-all'>
             <label htmlFor="search" className='h-12 px-4 space-x-2   flex items-center'>
-                <MagnifyingGlassIcon className="w-4 h-4 text-white dark:text-black" />
-                <input type="search" name="search" id="search" className="flex-1 h-full text-white border-0 ring-0 focus:ring-0
-                    bg-transparent text-sm dark:text-black placeholder:text-white dark:placeholder:text-black outline-none"
+                <MagnifyingGlassIcon className="w-4 h-4 text-black" />
+                <input type="search" name="search" id="search" className="flex-1 h-full border-0 ring-0 focus:ring-0
+                    bg-transparent text-sm text-black placeholder:text-black outline-none"
                     placeholder="Search Services, Professional, Bussiness" value={search.value} autoFocus={props.autoFocus || false}
                     onChange={(e) => setsearch(pre => ({ ...pre, value: e.target.value }))}
                     autoComplete='off' required
                 />
                 <button type="submit" className="hover:opacity-80 active:scale-90 py-1 px-2 
-                    bg-white dark:bg-black rounded-md text-black dark:text-white"
+                    bg-black rounded-md text-white"
                 >
                     Go
                 </button>
@@ -56,7 +56,7 @@ export default function SearchInput(props) {
                     <>
                         {search.api.map((data, index) => {
                             return <li key={index} >
-                                <Link to={`/services`} className=' block text-sm 
+                                <Link to={`/${search.value}/`} className=' block text-sm 
                                     border-b-2 border-transparent hover:bg-indigo-500/20 
                                     hover:text-indigo-500 py-2 px-3 rounded-md'
                                 >

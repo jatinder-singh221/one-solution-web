@@ -6,11 +6,11 @@ import SearchInput from '../core/SearchInput'
 export default function Search() {
   return (
     <>
-        <Appbar />
-        <main className="min-h-screen mt-16">
-            <SearchInput />
-        </main>
-        <Footer />
+      <Appbar />
+      <main className="min-h-screen mt-20 w-[95%] lg:w-[80%] mx-auto">
+        <SearchInput />
+      </main>
+      <Footer />
     </>
   )
 }

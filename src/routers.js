@@ -20,6 +20,8 @@ import Switch from './pages/Switch'
 import ServiceSlug from './pages/ServiceSlug'
 import Productslug from './pages/ProductSlug'
 import Search from './pages/Search'
+import BookService from './pages/BookService'
+import BookProducts from './pages/BookProduct'
 
 
 const routes = createBrowserRouter([
@@ -119,6 +121,16 @@ const routes = createBrowserRouter([
     {
         path: '/switch',
         element: <Switch />,
+        errorElement: <Error />
+    },
+    {
+        path: '/book-now-service',
+        element: <BookService />,
+        errorElement: <Error />
+    },
+    {
+        path: '/book-now-product',
+        element: <BookProducts />,
         errorElement: <Error />
     },
 ])

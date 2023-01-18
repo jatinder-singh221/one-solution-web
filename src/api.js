@@ -462,8 +462,88 @@ const Search = async (query) => {
     }
 }
 
+const bookPriceDetail = async (name,service,type) => {
+    try {
+        const url = location + `/services/book-now?name=${name}&service=${service}&type=${type}`
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${access}` 
+            },
+        })
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
+const Book = async (name,service,type, data) => {
+    try {
+        const url = location + `/services/book-now?name=${name}&service=${service}&type=${type}`
+        const access = cookie.get('Session_AID')
+        const body = JSON.stringify(data)
+        const api = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${access}` 
+            },
+            body: body
+        })
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
+const productPriceDetail = async (name,product,type) => {
+    try {
+        const url = location + `/products/book-now?name=${name}&product=${product}&type=${type}`
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${access}` 
+            },
+        })
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
+const BookProduct = async (name,product,type, data) => {
+    try {
+        const url = location + `/products/book-now?name=${name}&product=${product}&type=${type}`
+        const access = cookie.get('Session_AID')
+        const body = JSON.stringify(data)
+        const api = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${access}` 
+            },
+            body: body
+        })
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
 export { GetOtp, ValidateOtp, RegisterAsProfessional, login, signup, forgetPassword, 
 SessionStatus, ServicesList, ProductsList, Register, ServicesAndCatagories, ProductsAndCatagories,
 RegisterProducts, ImageUpload, DetailUpdate, Myaccount, PasswordUpdate, logoutUser, DeleteAccount,
-ServicesSlugList, ProductsSlugList, Search
+ServicesSlugList, ProductsSlugList, Search, bookPriceDetail, Book, productPriceDetail, BookProduct
 }

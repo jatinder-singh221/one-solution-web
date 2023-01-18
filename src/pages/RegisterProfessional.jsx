@@ -92,3 +92,5 @@ const as = {
         { name: "Product Seller", value: 'product' },
     ]
 }
+
+export  { as }

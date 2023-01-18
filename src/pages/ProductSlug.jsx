@@ -8,6 +8,7 @@ import { StarIcon, ShoppingBagIcon, CurrencyRupeeIcon, MapPinIcon, PhoneIcon } f
 import Button from '../core/Button'
 import { ProductsSlugList } from '../api'
 import Rating from 'react-rating'
+import Avtar from '../assests/avatar.jpg'
 
 export default function Productslug() {
 
@@ -43,7 +44,7 @@ export default function Productslug() {
     useEffect(() => { handleLoaProductList() }, [handleLoaProductList])
 
     const handleBookNow = (name, type) => {
-        navigate(`/book-now?name=${name}&service=${slug}&type=${type}`)
+        navigate(`/book-now-product?name=${name}&product=${slug}&type=${type}`)
     }
 
     const handleOpen = useCallback((isOpen, slug) => {
@@ -135,17 +136,21 @@ export default function Productslug() {
                                             <p className='text-xl capitalize text-violet-500'>{item.catagory}</p>
                                             <p className='opacity-80'>excluding other price</p>
                                             <p className='opacity-80 flex items-center py-2 bg-violet-100 rounded justify-center text-xl'><CurrencyRupeeIcon className='w-5 h-5 mr-1' />{item.price} </p>
-                                            <Button title='book now' onClick={() => handleBookNow(state.data?.name, item.catagory)} />
+                                            <Button title='book now' onClick={() => handleBookNow(state.data?.slug, item.catagory)} />
                                         </div>
                                     })}
                                 </div>
                                 <p className='text-xl mb-2'>Customer Rating and Feedback</p>
                                 <div className="pb-6 space-y-4">
                                     {state.data?.feedback.map((item, index) => {
-                                        return <div key={index} className='border-b pb-2'>
+                                        return <div key={index} className='border-b pb-2 space-y-2'>
+                                            <div className='flex items-center space-x-2'>
+                                                <img src={item.user.profile || Avtar} alt="user-profile" className='w-5 h-5 rounded-full overflow-hidden' />
+                                                <p className='text-xs'>{item.user.first_name} {item.user.last_name}</p>
+                                                <p className='text-xs'>{item.date}</p>
+                                            </div>
                                             <Rating initialRating={item.rating} className='space-x-2' readonly />
                                             <p className='text-violet-500 capitalize text-lg'>{item.feedback}</p>
-                                            <p className='text-xs'>{item.date}</p>
                                         </div>
                                     })}
                                 </div>
