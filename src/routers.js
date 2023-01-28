@@ -22,6 +22,12 @@ import Productslug from './pages/ProductSlug'
 import Search from './pages/Search'
 import BookService from './pages/BookService'
 import BookProducts from './pages/BookProduct'
+import About from './pages/About'
+import TermsCondation from './pages/TermsCondation'
+import Report from './pages/Report'
+import ProductsAndServicesProvider from './pages/ProductsAndServicesProvider'
+import MyServices from './pages/MyServices'
+import MyProducts from './pages/MyProducts'
 
 
 const routes = createBrowserRouter([
@@ -131,6 +137,36 @@ const routes = createBrowserRouter([
     {
         path: '/book-now-product',
         element: <BookProducts />,
+        errorElement: <Error />
+    },
+    {
+        path: '/about',
+        element: <About />,
+        errorElement: <Error />
+    },
+    {
+        path: '/terms',
+        element: <TermsCondation />,
+        errorElement: <Error />
+    },
+    {
+        path: '/report',
+        element: <Report />,
+        errorElement: <Error />
+    },
+    {
+        path: 'details/:slug',
+        element: <ProductsAndServicesProvider />,
+        errorElement: <Error />
+    },
+    {
+        path: 'my-services',
+        element: <MyServices />,
+        errorElement: <Error />
+    },
+    {
+        path: 'my-products',
+        element: <MyProducts />,
         errorElement: <Error />
     },
 ])

@@ -5,6 +5,7 @@ import EmptyResult from '../components/EmptyResult'
 export default function Notifications() {
     const storeState = useContext(store) ?? false
     const { user } = storeState.state
+    document.title = 'Notifications'
 
   return (
     <div className='space-y-6'>

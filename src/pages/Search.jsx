@@ -4,6 +4,7 @@ import Footer from '../components/Footer'
 import SearchInput from '../core/SearchInput'
 
 export default function Search() {
+  document.title = 'Search'
   return (
     <>
       <Appbar />

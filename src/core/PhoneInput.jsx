@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function PhoneInput(props) {
 
@@ -12,6 +12,7 @@ export default function PhoneInput(props) {
         e.target.value = phone.code + e.target.value
         props.onChange(e)
     }
+    
 
     return (
         <div className='flex flex-col space-y-4 w-full'>
@@ -23,7 +24,7 @@ export default function PhoneInput(props) {
                     <option value="+44" className='bg-white dark:bg-black'>UK +44</option>
                 </select>
                 <input type={props.type || 'text'} name={props.name} id={props.id} disabled={props.disabled}
-                    placeholder={props.placeholder || 'placeholder'} value={phone.value}
+                    placeholder={props.placeholder || 'placeholder'} value={phone.value} readOnly={props.readOnly}
                     onChange={handleOnChange} onBlur={props.onBlur} autoFocus={props.autoFocus}
                     className="h-12 w-full px-2 rounded-md focus:border-violet-600 focus:border bg-violet-100 dark:bg-violet-500/10
                 placeholder:capitalize outline-none transition-all border border-transparent placeholder:text-sm

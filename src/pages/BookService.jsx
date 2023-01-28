@@ -15,6 +15,7 @@ import PhoneInput from '../core/PhoneInput'
 import { bookValidation } from '../validation'
 
 export default function BookService() {
+  document.title = 'Book Now'
   const navigate = useNavigate()
   const storeState = useContext(store) ?? false
   const { isAuthenciated } = storeState.state

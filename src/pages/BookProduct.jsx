@@ -28,13 +28,14 @@ export default function BookProducts() {
       product_seller: searchParams.get('name'),
       Product: searchParams.get('product'),
       catagory: searchParams.get('type'),
+      quantity: searchParams.get('quantity'),
       phone: '',
       alter_phone: '',
       address: ''
     },
     validationSchema: bookValidation,
     onSubmit: async (values) => {
-      const api = await BookProduct(form.values.product_seller, form.values.Product, form.values.catagory, form.values)
+      const api = await BookProduct(form.values.product_seller, form.values.Product, form.values.catagory, form.values, form.values.quantity)
       switch (api.status) {
         case 201:
             storeState.setmessage({
@@ -52,7 +53,7 @@ export default function BookProducts() {
 
   const loadPriceData = useCallback(async () => {
     if (isAuthenciated) {
-      const api = await productPriceDetail(form.values.product_seller, form.values.Product, form.values.catagory)
+      const api = await productPriceDetail(form.values.product_seller, form.values.Product, form.values.catagory, form.values.quantity)
       switch (api.status) {
         case 200:
           const apiRes = await api.json()
@@ -63,9 +64,10 @@ export default function BookProducts() {
           break;
       }
     }
-  }, [navigate, form.values.product_seller, form.values.Product, form.values.catagory , isAuthenciated])
+  }, [navigate, form.values.product_seller, form.values.Product, form.values.catagory , isAuthenciated, form.values.quantity])
 
   useEffect(() => { loadPriceData() }, [loadPriceData])
+  document.title = 'Book Now'
 
 
   return (

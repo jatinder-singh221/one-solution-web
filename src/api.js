@@ -502,9 +502,9 @@ const Book = async (name,service,type, data) => {
     }
 }
 
-const productPriceDetail = async (name,product,type) => {
+const productPriceDetail = async (name,product,type, quantity) => {
     try {
-        const url = location + `/products/book-now?name=${name}&product=${product}&type=${type}`
+        const url = location + `/products/book-now?name=${name}&product=${product}&type=${type}&quantity=${quantity}`
         const access = cookie.get('Session_AID')
         const api = await fetch(url, {
             method: 'GET',
@@ -521,9 +521,9 @@ const productPriceDetail = async (name,product,type) => {
     }
 }
 
-const BookProduct = async (name,product,type, data) => {
+const BookProduct = async (name,product,type, data, quantity) => {
     try {
-        const url = location + `/products/book-now?name=${name}&product=${product}&type=${type}`
+        const url = location + `/products/book-now?name=${name}&product=${product}&type=${type}&quantity=${quantity}`
         const access = cookie.get('Session_AID')
         const body = JSON.stringify(data)
         const api = await fetch(url, {
@@ -542,8 +542,199 @@ const BookProduct = async (name,product,type, data) => {
     }
 }
 
+const MyBookings = async () => {
+    try {
+        const url = location + `/base/bookings`
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${access}` 
+            },
+        })
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
+const Details = async (slug) => {
+    try {
+        const url = location + `/base/${slug}`
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+        })
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
+const MyService = async () => {
+    try {
+        const url = location + `/services/my-services`
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
+const MyServiceCosting = async (service, catagory) => {
+    try {
+        const url = location + `/services/my-services-costing/${service}?catagory=${catagory}`
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
+const MyServiceCostingCreate = async (data) => {
+    try {
+        const url = location + `/services/my-services-costing-create/${data.service}?catagory=${data.catagory}`
+        const body = JSON.stringify(data)
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+            body: body
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
+const MyServiceCostingUpdate = async (data) => {
+    try {
+        const url = location + `/services/my-services-costing/${data.service}?catagory=${data.catagory}`
+        const body = JSON.stringify(data)
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+            body: body
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
+
+const MyProduct = async () => {
+    try {
+        const url = location + `/products/my-products`
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
+const MyProductCosting = async (product, catagory) => {
+    try {
+        const url = location + `/products/my-products-costing/${product}?catagory=${catagory}`
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
+const MyProductCostingCreate = async (data) => {
+    try {
+        const url = location + `/products/my-products-costing-create/${data.Product}?catagory=${data.catagory}`
+        const body = JSON.stringify(data)
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+            body: body
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
+const MyProductCostingUpdate = async (data) => {
+    try {
+        const url = location + `/products/my-products-costing/${data.Product}?catagory=${data.catagory}`
+        const body = JSON.stringify(data)
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+            body: body
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
 export { GetOtp, ValidateOtp, RegisterAsProfessional, login, signup, forgetPassword, 
 SessionStatus, ServicesList, ProductsList, Register, ServicesAndCatagories, ProductsAndCatagories,
 RegisterProducts, ImageUpload, DetailUpdate, Myaccount, PasswordUpdate, logoutUser, DeleteAccount,
-ServicesSlugList, ProductsSlugList, Search, bookPriceDetail, Book, productPriceDetail, BookProduct
+ServicesSlugList, ProductsSlugList, Search, bookPriceDetail, Book, productPriceDetail, BookProduct,
+MyBookings, Details, MyService, MyServiceCosting, MyServiceCostingUpdate, MyServiceCostingCreate,
+MyProductCosting, MyProductCostingCreate, MyProductCostingUpdate, MyProduct
 }

@@ -41,7 +41,7 @@ export default function SearchInput(props) {
                 <MagnifyingGlassIcon className="w-4 h-4 text-black" />
                 <input type="search" name="search" id="search" className="flex-1 h-full border-0 ring-0 focus:ring-0
                     bg-transparent text-sm text-black placeholder:text-black outline-none"
-                    placeholder="Search Services, Professional, Bussiness" value={search.value} autoFocus={props.autoFocus || false}
+                    placeholder="Search Services, Professional, Bussiness" value={search.data?.name} autoFocus={props.autoFocus || false}
                     onChange={(e) => setsearch(pre => ({ ...pre, value: e.target.value }))}
                     autoComplete='off' required
                 />
@@ -56,7 +56,7 @@ export default function SearchInput(props) {
                     <>
                         {search.api.map((data, index) => {
                             return <li key={index} >
-                                <Link to={`/${search.value}/`} className=' block text-sm 
+                                <Link to={`/${search.value}/${data.slug}`} className=' block text-sm 
                                     border-b-2 border-transparent hover:bg-indigo-500/20 
                                     hover:text-indigo-500 py-2 px-3 rounded-md'
                                 >

@@ -17,7 +17,7 @@ import { name, address, phonenumber, pin } from './Registerservice'
 
 export default function Registerservice() {
 
-    document.title = 'Service Register'
+    document.title = 'Product Register'
     const navigate = useNavigate()
 
     const [products, setproducts] = useState([])

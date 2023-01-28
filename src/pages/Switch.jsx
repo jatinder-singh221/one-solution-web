@@ -15,6 +15,7 @@ export default function Switch() {
     const { value } = e.target
    navigate(`/register-${value}`)
   }
+  document.title = 'Switch'
 
 
   return (

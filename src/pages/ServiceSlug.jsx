@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, Fragment } from 'react'
 import AppBar from '../components/Appbar'
 import Footer from '../components/Footer'
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
+import { useParams, useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { Dialog, Transition } from '@headlessui/react'
 import EmptyResult from '../components/EmptyResult'
 import { StarIcon, ShoppingBagIcon, CurrencyRupeeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline'
@@ -78,7 +78,7 @@ export default function ServiceSlug() {
                             return <li key={index} className='relative p-6 rounded w-full bg-white space-y-4 '>
                                 <div className='flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0'>
                                     <div className='flex justify-center  flex-col w-full space-y-4'>
-                                        <p className='text-3xl text-violet-500'>{data.name}</p>
+                                        <Link to={`/details/${data.slug}`} className='text-3xl text-violet-500'>{data.name}</Link>
                                         <p className='flex items-center text-lg opacity-80'><StarIcon className='w-4 h-4 mr-2' /> Average ratings {data.rating}</p>
                                         <p className='flex items-center text-lg opacity-80'><ShoppingBagIcon className='w-4 h-4 mr-2' /> Bookings {data.booking}</p>
                                         <a href={`tel:${data.phone_number}`} className='flex items-center text-lg opacity-80'><PhoneIcon className='w-4 h-4 mr-2' /> Mobile {data.phone_number}</a>
@@ -118,7 +118,7 @@ export default function ServiceSlug() {
                             <Dialog.Description className='space-y-6 overflow-y-auto h-full hidden-scrollbar' as='div'>
                                 <div className='flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0'>
                                     <div className='flex justify-center  flex-col w-full space-y-4'>
-                                        <p className='text-3xl text-violet-500'>{state.data?.name}</p>
+                                    <Link to={`/details/${state.data?.slug}`} className='text-3xl text-violet-500'>{state.data?.name}</Link>
                                         <p className='flex items-center text-lg opacity-80'><StarIcon className='w-4 h-4 mr-2' /> Average ratings {state.data?.rating}</p>
                                         <p className='flex items-center text-lg opacity-80'><ShoppingBagIcon className='w-4 h-4 mr-2' /> Bookings {state.data?.booking}</p>
                                         <a href={`tel:${state.data?.phone_number}`} className='flex items-center text-lg opacity-80'><PhoneIcon className='w-4 h-4 mr-2' /> Mobile {state.data?.phone_number}</a>

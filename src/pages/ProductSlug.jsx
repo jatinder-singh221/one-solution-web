@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, Fragment } from 'react'
 import AppBar from '../components/Appbar'
 import Footer from '../components/Footer'
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
+import { useParams, useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { Dialog, Transition } from '@headlessui/react'
 import EmptyResult from '../components/EmptyResult'
 import { StarIcon, ShoppingBagIcon, CurrencyRupeeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline'
@@ -9,6 +9,7 @@ import Button from '../core/Button'
 import { ProductsSlugList } from '../api'
 import Rating from 'react-rating'
 import Avtar from '../assests/avatar.jpg'
+import Input from '../core/Input'
 
 export default function Productslug() {
 
@@ -26,6 +27,7 @@ export default function Productslug() {
 
     const [list, setlist] = useState([])
     const [loading, setloading] = useState(true)
+    const [quantity, setquantity] = useState(1)
 
     const handleLoaProductList = useCallback(async () => {
         const api = await ProductsSlugList(slug)
@@ -44,7 +46,7 @@ export default function Productslug() {
     useEffect(() => { handleLoaProductList() }, [handleLoaProductList])
 
     const handleBookNow = (name, type) => {
-        navigate(`/book-now-product?name=${name}&product=${slug}&type=${type}`)
+        navigate(`/book-now-product?name=${name}&product=${slug}&type=${type}&quantity=${quantity}`)
     }
 
     const handleOpen = useCallback((isOpen, slug) => {
@@ -78,7 +80,7 @@ export default function Productslug() {
                             return <li key={index} className='relative p-6 rounded w-full bg-white space-y-4 '>
                                 <div className='flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0'>
                                     <div className='flex justify-center  flex-col w-full space-y-4'>
-                                        <p className='text-3xl text-violet-500'>{data.name}</p>
+                                        <Link to={`/details/${data.slug}`} className='text-3xl text-violet-500'>{data.name}</Link>
                                         <p className='flex items-center text-lg opacity-80'><StarIcon className='w-4 h-4 mr-2' /> Average ratings {data.rating}</p>
                                         <p className='flex items-center text-lg opacity-80'><ShoppingBagIcon className='w-4 h-4 mr-2' /> Bookings {data.booking}</p>
                                         <a href={`tel:${data.phone_number}`} className='flex items-center text-lg opacity-80'><PhoneIcon className='w-4 h-4 mr-2' /> Mobile {data.phone_number}</a>
@@ -118,7 +120,7 @@ export default function Productslug() {
                             <Dialog.Description className='space-y-6 overflow-y-auto h-full hidden-scrollbar' as='div'>
                                 <div className='flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0'>
                                     <div className='flex justify-center  flex-col w-full space-y-4'>
-                                        <p className='text-3xl text-violet-500'>{state.data?.name}</p>
+                                        <Link to={`/details/${state.data?.slug}`} className='text-3xl text-violet-500'>{state.data?.name}</Link>
                                         <p className='flex items-center text-lg opacity-80'><StarIcon className='w-4 h-4 mr-2' /> Average ratings {state.data?.rating}</p>
                                         <p className='flex items-center text-lg opacity-80'><ShoppingBagIcon className='w-4 h-4 mr-2' /> Bookings {state.data?.booking}</p>
                                         <a href={`tel:${state.data?.phone_number}`} className='flex items-center text-lg opacity-80'><PhoneIcon className='w-4 h-4 mr-2' /> Mobile {state.data?.phone_number}</a>
@@ -129,13 +131,14 @@ export default function Productslug() {
                                     </div>
                                     <img src={state.data?.image} alt="banner" className='aspect-video h-52 rounded-md' />
                                 </div>
-                                <p className='text-xl mb-2'>Service Price List</p>
+                                <p className='text-xl mb-2'>Product Price List</p>
                                 <div className="rounded flex flex-col lg:flex-row lg:space-x-3 space-y-3 lg:space-y-0">
                                     {state.data?.costing.map((item, index) => {
                                         return <div key={index} className='space-y-2  rounded p-4'>
                                             <p className='text-xl capitalize text-violet-500'>{item.catagory}</p>
-                                            <p className='opacity-80'>excluding other price</p>
+                                            <p className='opacity-80'>Price per lenght/piece/other</p>
                                             <p className='opacity-80 flex items-center py-2 bg-violet-100 rounded justify-center text-xl'><CurrencyRupeeIcon className='w-5 h-5 mr-1' />{item.price} </p>
+                                            <Input {...Quantity} value={quantity} onChange={(e) =>setquantity(e.target.value) }/>
                                             <Button title='book now' onClick={() => handleBookNow(state.data?.slug, item.catagory)} />
                                         </div>
                                     })}
@@ -160,6 +163,19 @@ export default function Productslug() {
                 </Transition>
             </main>
             <Footer />
+
         </>
+
     )
 }
+
+
+const Quantity = {
+    name: 'quantity',
+    id: 'quantity',
+    placeholder: 'Your Quantity',
+    label: 'Quantity',
+    type: 'number',
+    min: 1,
+    max: 100
+  }
