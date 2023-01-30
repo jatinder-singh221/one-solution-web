@@ -12,7 +12,7 @@ export default function Input(props) {
               disabled:cursor-not-allowed
               "
             />
-            {props.error && <p className='transition-all text-red-500 py-1 px-2 rounded text-sm bg-red-100 dark:bg-red-500/10'>{props.error || 'Error'}</p>}
+            {props.error && <p className='transition-all text-red-500 py-1 px-2 rounded text-xs bg-red-100 dark:bg-red-500/10'>{props.error || 'Error'}</p>}
         </div>
 
     )

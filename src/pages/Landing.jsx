@@ -1,38 +1,44 @@
 import { useNavigate } from 'react-router-dom'
 import Svg from '../assests/landing.svg'
-import { ArrowDownLeftIcon, CurrencyRupeeIcon, WrenchIcon, ClockIcon } from '@heroicons/react/24/outline'
+import { ArrowDownLeftIcon, CurrencyRupeeIcon, 
+  WrenchIcon, ClockIcon 
+} from '@heroicons/react/24/outline'
+import SearchInput from '../core/SearchInput'
+
 import Unprotected from '../Unprotected'
 import Appbar from '../components/Appbar'
 import Footer from '../components/Footer'
 
 export default function Landing() {
 
+  document.title = 'One Solution'
   const navigate = useNavigate()
+
   return (
     <Unprotected>
       <Appbar />
       <main className="pt-20 px-4 w-full min-h-[calc(100vh-3.5rem)] grid grid-cols-2 gap-4 mt-3">
-        <section className="px-4 col-span-full lg:col-span-1 flex flex-col space-y-10  items-center justify-center">
+        <section className="px-4 col-span-full lg:col-span-1 flex flex-col space-y-6  items-center justify-center">
           <h1 className="text-4xl font-bold leading-snug tracking-tight text-gray-800 
-          lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight text-start"
+          lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight text-center md:text-start"
           >
             Quality services and products at your door
           </h1>
           <p className="text-xl leading-normal text-gray-500 lg:text-xl 
-            xl:text-2xl text-start"
+            xl:text-xl text-center md:text-start"
           >
             Concerned that your geyser has stopped operating or that your kitchen sink is clogged.
             Don't worry; we'll provide services from professionals
           </p>
           <div className="flex flex-col lg:flex-row  space-y-4 lg:space-y-0 lg:space-x-4 w-full">
             <button className='px-8 py-3 text-lg font-medium text-center text-white
-              bg-violet-600 rounded-md active:scale-90 transition-all'
+              bg-violet-600 rounded-md active:scale-90 transition-all shadow-xl shadow-violet-300'
               onClick={() => navigate('/login')}
             >
               Book a Professional
             </button>
             <button className='px-8 py-3 text-lg font-medium text-center border 
-              border-black rounded-md active:scale-90 transition-all'
+              border-black rounded-md active:scale-90 transition-all shadow-xl shadow-gray-100'
               onClick={() => navigate('/services')}
             >
               Our services
@@ -47,8 +53,8 @@ export default function Landing() {
         </section>
         <section className="relative col-span-full lg:col-span-1 flex items-center justify-center">
           <img src={Svg} alt="door-step-group-svg" loading='lazy' />
-          <div className="absolute w-[90%] lg:w-[70%] top-8 drop-shadow-md rounded-md overflow-hidden  transition-all bg-white">
-            {/* <Search /> */}
+          <div className="absolute w-[90%] lg:w-[70%] top-8 shadow-lg shadow-violet-300 rounded-md overflow-hidden  transition-all bg-white">
+            <SearchInput />
           </div>
         </section>
         <section className='col-span-full'>
@@ -127,7 +133,7 @@ export default function Landing() {
               Our goal is to make your life easier by providing quality  products that can be delivered to your doorstepd equipped to handle any task.
             </p>
             <button className='px-8 py-3 text-lg font-medium text-center text-white
-              bg-violet-600 rounded-md active:scale-90 transition-all'
+              bg-violet-600 rounded-md active:scale-90 transition-all shadow-xl shadow-violet-300'
               onClick={() => navigate('/products')}
             >
               Our Products

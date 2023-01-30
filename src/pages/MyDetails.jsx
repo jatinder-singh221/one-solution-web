@@ -1,22 +1,24 @@
 import { useState, useContext, useCallback, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { ImageUpload, DetailUpdate, Myaccount } from '../api/Authenciation'
+import { useFormik } from 'formik'
+import { store } from '../App'
+
 import Input from '../core/Input'
 import Select from '../core/SelectInput'
 import Button from '../core/Button'
 import ImagePreview from '../core/ImagePreview'
 import Avatar from '../assests/avatar.jpg'
-import { store } from '../App'
-import { useFormik } from 'formik'
-import { useNavigate } from 'react-router-dom'
-import { ImageUpload, DetailUpdate, Myaccount } from '../api'
 
 import { CameraIcon } from '@heroicons/react/24/outline'
 
 export default function Details() {
+
     document.title = 'Details'
 
+    const navigate = useNavigate()
     const stateStore = useContext(store) ?? false
     const [user, setuser] = useState({})
-    const navigate = useNavigate()
     const profileImage = user.profile !== null ? user.profile : Avatar
 
     const [formDisable, setformDisable] = useState(true)
@@ -69,7 +71,7 @@ export default function Details() {
         switch (api.status) {
             case 200:
                 const apiRes = await api.json()
-                setuser(pre => ({...pre, profile: apiRes.profile}))
+                setuser(pre => ({ ...pre, profile: apiRes.profile }))
                 stateStore.setstate(pre => ({ ...pre, user: { ...pre.user, profile: apiRes.profile } }))
                 stateStore.setmessage({
                     hidden: false,
@@ -83,7 +85,7 @@ export default function Details() {
         }
     }
 
-    const Onload = useCallback(async() => {
+    const Onload = useCallback(async () => {
         const api = await Myaccount()
         switch (api.status) {
             case 200:
@@ -97,8 +99,8 @@ export default function Details() {
     }, [navigate])
 
 
-    useEffect(() => {Onload()}, [Onload])
-    
+    useEffect(() => { Onload() }, [Onload])
+
 
     return (
         <div className='space-y-6'>
@@ -117,13 +119,10 @@ export default function Details() {
             </div>
 
             <form className='pt-12 space-y-4 w-full lg:w-[85%] m-auto' onSubmit={form.handleSubmit}>
-                <div className='flex justify-end'>
-                    <Button title='edit details' onClick={() => setformDisable(false)} />
-                </div>
-                <Input {...firstname} disabled={formDisable} value={form.values.first_name} onChange={form.handleChange} onBlur={form.handleBlur} error={form.touched.first_name && form.errors.first_name} />
-                <Input {...lastname} disabled={formDisable} value={form.values.last_name} onChange={form.handleChange} onBlur={form.handleBlur} error={form.touched.last_name && form.errors.last_name} />
-                <Input {...email} disabled={formDisable} value={form.values.email} onChange={form.handleChange} onBlur={form.handleBlur} error={form.touched.email && form.errors.email} />
-                <Select {...gender} disabled={formDisable} value={form.values.gender} onChange={form.handleChange} onBlur={form.handleBlur} error={form.touched.gender && form.errors.gender} />
+                <Input {...firstname}  value={form.values.first_name} onChange={form.handleChange} onBlur={form.handleBlur} error={form.touched.first_name && form.errors.first_name} />
+                <Input {...lastname}  value={form.values.last_name} onChange={form.handleChange} onBlur={form.handleBlur} error={form.touched.last_name && form.errors.last_name} />
+                <Input {...email}  value={form.values.email} onChange={form.handleChange} onBlur={form.handleBlur} error={form.touched.email && form.errors.email} />
+                <Select {...gender}  value={form.values.gender} onChange={form.handleChange} onBlur={form.handleBlur} error={form.touched.gender && form.errors.gender} />
                 <div className='flex justify-end'>
                     <Button type='submit' title='Update Details' disabled={!(form.isValid && form.dirty)} />
                 </div>

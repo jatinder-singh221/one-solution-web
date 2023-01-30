@@ -561,6 +561,43 @@ const MyBookings = async () => {
     }
 }
 
+const MyServiceBookings = async () => {
+    try {
+        const url = location + `/services/my-services-bookings`
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${access}` 
+            },
+        })
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+const MyProductBookings = async () => {
+    try {
+        const url = location + `/products/my-products-bookings`
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${access}` 
+            },
+        })
+        return api
+
+    } catch (error) {
+        return {status: 500}
+    }
+}
+
 const Details = async (slug) => {
     try {
         const url = location + `/base/${slug}`
@@ -654,6 +691,47 @@ const MyServiceCostingUpdate = async (data) => {
     }
 }
 
+const MyServiceBookingUpdate = async (data) => {
+    try {
+        const url = location + `/services/my-services-bookings-update/${data.id}`
+        const body = JSON.stringify(data)
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+            body: body
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
+const MyProductBookingUpdate = async (data) => {
+    try {
+        const url = location + `/products/my-products-bookings-update/${data.id}`
+        const body = JSON.stringify(data)
+        const access = cookie.get('Session_AID')
+        const api = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+            body: body
+        })
+        return api
+    } catch (error) {
+        return { status: 500 }
+    }
+}
+
+
 
 const MyProduct = async () => {
     try {
@@ -736,5 +814,6 @@ SessionStatus, ServicesList, ProductsList, Register, ServicesAndCatagories, Prod
 RegisterProducts, ImageUpload, DetailUpdate, Myaccount, PasswordUpdate, logoutUser, DeleteAccount,
 ServicesSlugList, ProductsSlugList, Search, bookPriceDetail, Book, productPriceDetail, BookProduct,
 MyBookings, Details, MyService, MyServiceCosting, MyServiceCostingUpdate, MyServiceCostingCreate,
-MyProductCosting, MyProductCostingCreate, MyProductCostingUpdate, MyProduct
+MyProductCosting, MyProductCostingCreate, MyProductCostingUpdate, MyProduct, MyServiceBookings, MyProductBookings,
+MyServiceBookingUpdate, MyProductBookingUpdate
 }

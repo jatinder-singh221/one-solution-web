@@ -14,14 +14,14 @@ export default function Footer() {
                 Don't worry; we'll provide services from professionals
                 </div>
             </div>
-            <div className='flex flex-wrap w-full -mt-2 -ml-3 lg:ml-0 space-y-4'>
-                <Link to='/about' className='w-full text-gray-500 rounded-md hover:text-violet-500 focus:text-violet-500'>
+            <div className='flex flex-wrap w-full space-y-2 lg:space-y-0 '>
+                <Link to='/about' className='text-sm w-full text-gray-500 rounded-md hover:text-violet-500 focus:text-violet-500'>
                     About
                 </Link>
-                <Link to='/terms' className='w-full text-gray-500 rounded-md hover:text-violet-500 focus:text-violet-500'>
+                <Link to='/terms' className='text-sm w-full text-gray-500 rounded-md hover:text-violet-500 focus:text-violet-500'>
                     Terms and Condiations
                 </Link>
-                <Link to='/report' className='w-full text-gray-500 rounded-md hover:text-violet-500 focus:text-violet-500'>
+                <Link to='/report' className='text-sm w-full text-gray-500 rounded-md hover:text-violet-500 focus:text-violet-500'>
                     Report
                 </Link>
             </div>

@@ -15,8 +15,8 @@ export default function MenuItem(props) {
                 leaveTo='opacity-0 translate-y-1'
                 as={Fragment}
             >
-                <Menu.Items as='ul' className='z-50 fixed max-h-[85vh] w-[90%] left-auto lg:w-96 right-auto
-                lg:bottom-auto  lg:right-2 lg:top-14 backdrop-filter hidden-scrollbar 
+                <Menu.Items as='ul' className='z-50 fixed max-h-[85vh] w-[90%] left-auto lg:w-80 right-auto
+                lg:bottom-auto  lg:right-2 lg:top-14 backdrop-filter hidden-scrollbar lg:shadow-md lg:shadow-violet-600
                 backdrop-blur-3xl outline-none rounded-t-lg lg:rounded-lg space-y-4 p-4 
                 bottom-0 overflow-y-auto'
                 >

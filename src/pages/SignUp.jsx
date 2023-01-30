@@ -11,7 +11,7 @@ import { store } from '../App'
 
 import { loginValidtion } from '../validation'
 import { phonenumber, password } from './Login'
-import { signup } from '../api'
+import { signup } from '../api/Authenciation'
 import UnProtectedRoute from '../Unprotected'
 import PhoneInput from '../core/PhoneInput'
 
@@ -33,10 +33,11 @@ export default function SignUp() {
 
     const successFunction = async () => {
         const api = await signup(form.values)
-        switch (api) {
-          case 201:
+        switch (api.status) {
+          case 200:
             setisOpen(false)
-            storeState.setstate(pre => ({...pre, isAuthenciated: true}))
+            const user = await api.json()
+            storeState.setstate(pre => ({...pre, user:user, isAuthenciated: true}))
             storeState.setmessage({
                 hidden: false,
                 message: 'Your account has been created'
@@ -48,7 +49,7 @@ export default function SignUp() {
             form.setErrors({phone:'User Already exists'})
             break;
           default:
-            navigate(`/${api}`)
+            navigate(`/${api.status}`)
             break;
         }
       }

@@ -197,5 +197,6 @@ const price = {
     id: 'otp',
     placeholder: 'price',
     label: 'Price',
-    autoFocus: true
 }
+
+export { price }

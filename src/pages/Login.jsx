@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 
 import UnProtected from '../Unprotected'
 import { loginValidtion } from '../validation'
-import { login } from '../api'
+import { login } from '../api/Authenciation'
 import { store } from '../App'
 import PhoneInput from '../core/PhoneInput'
 
@@ -32,10 +32,11 @@ export default function Login() {
 
   const successFunction = async () => {
     const api = await login(form.values)
-    switch (api) {
+    switch (api.status) {
       case 200:
         setisOpen(false)
-        storeState.setstate(pre => ({...pre, isAuthenciated: true}))
+        const apiRes = await api.json()
+        storeState.setstate(pre => ({...pre, user:apiRes, isAuthenciated: true}))
         storeState.setmessage({
           hidden: false,
           message: 'Loging In'
@@ -46,7 +47,7 @@ export default function Login() {
         form.setErrors({phone:'Invalid phone number or', password: 'Invalid password'})
         break;
       default:
-        navigate(`/${api}`)
+        navigate(`/${api.status}`)
         break;
     }
   }

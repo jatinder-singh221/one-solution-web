@@ -1,19 +1,22 @@
 import { useState, useCallback, useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+
 import AppBar from '../components/Appbar'
 import Footer from '../components/Footer'
 import EmptyResult from '../components/EmptyResult'
 import ServiceSvg from '../assests/services.svg'
+import DataLoading from '../components/DataLoading'
 
-import { useNavigate, Link } from 'react-router-dom'
-
-import { ServicesList } from '../api'
+import { ServicesList } from '../api/Services'
 
 export default function Services() {
 
   document.title = 'Our services'
 
-  const [list, setlist] = useState([])
-  const [loading, setloading] = useState(true)
+  const [list, setlist] = useState({
+    data: [],
+    loading: true
+  })
   const navigate = useNavigate()
 
   const handleLoadServicesList = useCallback(async () => {
@@ -21,13 +24,13 @@ export default function Services() {
     switch (api.status) {
       case 200:
         const apiRes = await api.json()
-        setlist(apiRes)
+        setlist(pre => ({ ...pre, data: apiRes }))
         break;
       default:
         navigate(`/${api.status}`)
         break;
     }
-    setloading(false)
+    setlist(pre => ({ ...pre, loading: false }))
   }, [navigate])
 
   useEffect(() => { handleLoadServicesList() }, [handleLoadServicesList])
@@ -42,19 +45,19 @@ export default function Services() {
           <div className='col-span-full lg:col-span-1 order-1 lg:order-2 p-4'>
             <img src={ServiceSvg} alt="services-img" loading='lazy' className='aspect-video' />
           </div>
-          {!loading ? <ul className='col-span-full lg:col-span-1 order-2 lg:order-1 grid grid-cols-2 gap-4 lg:grid-cols-3 rounded place-content-start  p-2'>
-            {list.length > 0 ? <>
-              {list.map((data, index) => {
-                return <li key={index} className='py-4 rounded w-full hover:bg-violet-500 hover:text-white '>
-                  <Link to={`/services/${data.slug}`} title={data.name}>
-                    <img src={data.image} alt={data.name} loading="lazy" className='h-20 w-20 object-fill  mx-auto' />
-                    <p className='capitalize mt-2 text-center'>{data.name}</p>
+          {!list.loading ? <ul className='col-span-full lg:col-span-1 order-2 lg:order-1 grid grid-cols-3 gap-4 rounded place-content-start  p-2'>
+            {list.data?.length > 0 ? <>
+              {list.data.map((data, index) => {
+                return <li key={index}>
+                  <Link to={`/services/${data.slug}`} title={data.name} className='block hover:scale-110 transition-all'>
+                    <img src={data.image} alt={data.name} loading="lazy" className='p-2  object-fill  mx-auto shadow-lg shadow-violet-300 rounded-md overflow-hidden bg-white ' />
+                    <p className='capitalize mt-2 text-center text-sm'>{data.name}</p>
                   </Link>
                 </li>
               })}
             </>
               : <EmptyResult name='no services yet' />}
-          </ul> : <p>loading...</p>}
+          </ul> : <DataLoading />}
         </div>
       </main>
       <Footer />

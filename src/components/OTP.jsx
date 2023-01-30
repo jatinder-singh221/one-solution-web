@@ -1,13 +1,14 @@
 import { Fragment, useCallback, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import Logo from '../core/Logo'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'
+
+import Logo from '../core/Logo'
 import Button from '../core/Button'
 import Icon from '../core/Icon'
 import Input from '../core/Input'
-import { useNavigate } from 'react-router-dom'
 
-import { GetOtp, ValidateOtp } from '../api'
+import { GetOtp, ValidateOtp } from '../api/Authenciation'
 import { useFormik } from 'formik'
 import { otpValidation } from '../validation'
 
@@ -25,6 +26,7 @@ export default function Otp(props) {
                     break;
                 case 401:
                     form.setErrors({ otp: 'Invalid Otp Code' })
+                    form.setFieldValue(otp, '')
                     break;
                 default:
                     navigate(`/${api}`)
@@ -33,7 +35,10 @@ export default function Otp(props) {
         }
     })
 
-    const handleClose = () => props.setisOpen(!props.isOpen)
+    const handleClose = () =>{ 
+        props.setisOpen(!props.isOpen)
+        form.setFieldValue(otp, '')
+    }
 
     const getOtpCall = useCallback(async () => {
         if (props.isOpen) {

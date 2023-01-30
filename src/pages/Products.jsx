@@ -1,33 +1,37 @@
 import { useState, useCallback, useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+
 import AppBar from '../components/Appbar'
 import Footer from '../components/Footer'
 import EmptyResult from '../components/EmptyResult'
-import ServiceSvg from '../assests/services.svg'
+import ProductSvg from '../assests/products.svg'
+import DataLoading from '../components/DataLoading'
 
-import { useNavigate, Link } from 'react-router-dom'
-
-import { ProductsList } from '../api'
+import { ProductsList } from '../api/Products'
 
 export default function Services() {
 
   document.title = 'Our Products'
 
-  const [list, setlist] = useState([])
-  const [loading, setloading] = useState(true)
   const navigate = useNavigate()
+
+  const [list, setlist] = useState({
+    loading: true,
+    data: []
+  })
 
   const handleLoadProductList = useCallback(async () => {
     const api = await ProductsList()
     switch (api.status) {
       case 200:
         const apiRes = await api.json()
-        setlist(apiRes)
+        setlist(pre => ({ ...pre, data: apiRes }))
         break;
       default:
         navigate(`/${api.status}`)
         break;
     }
-    setloading(false)
+    setlist(pre => ({ ...pre, loading: false }))
   }, [navigate])
 
   useEffect(() => { handleLoadProductList() }, [handleLoadProductList])
@@ -40,21 +44,21 @@ export default function Services() {
         <h1 className='text-2xl font-bold'>Our Products</h1>
         <div className='grid grid-cols-2'>
           <div className='col-span-full lg:col-span-1 order-1 lg:order-2 p-4'>
-            <img src={ServiceSvg} alt="services-img" loading='lazy' className='aspect-video' />
+            <img src={ProductSvg} alt="services-img" loading='lazy' className='aspect-video' />
           </div>
-          {!loading ? <ul className='col-span-full lg:col-span-1 order-2 lg:order-1 grid grid-cols-2 gap-4 lg:grid-cols-3 rounded place-content-start  p-2'>
-            {list.length > 0 ? <>
-              {list.map((data, index) => {
-                return <li key={index} className='py-4 rounded w-full hover:bg-violet-500 hover:text-white '>
-                  <Link to={`/products/${data.slug}`} title={data.name}>
-                    <img src={data.image} alt={data.name} loading="lazy" className='h-20 w-20 object-fill  mx-auto' />
-                    <p className='capitalize mt-2 text-center'>{data.name}</p>
+          {!list.loading ? <ul className='col-span-full lg:col-span-1 order-2 lg:order-1 grid gap-4 grid-cols-3 rounded place-content-start  p-2'>
+            {list.data?.length > 0 ? <>
+              {list.data.map((data, index) => {
+                return <li key={index} >
+                  <Link to={`/products/${data.slug}`} title={data.name}  className='block hover:scale-110 transition-all'>
+                    <img src={data.image} alt={data.name} loading="lazy" className='p-2  object-fill  mx-auto shadow-lg shadow-violet-300 rounded-md overflow-hidden bg-white ' />
+                    <p className='capitalize mt-2 text-center text-sm'>{data.name}</p>
                   </Link>
                 </li>
               })}
             </>
-              : <EmptyResult name='no services yet' />}
-          </ul> : <p>loading...</p>}
+              : <EmptyResult name='no Products yet' />}
+          </ul> : <DataLoading />}
         </div>
       </main>
       <Footer />

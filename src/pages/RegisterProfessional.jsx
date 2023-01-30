@@ -1,25 +1,27 @@
 import { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
+
+import SignUpSvg from '../assests/Register.svg'
+
+import { store } from '../App'
+import { loginValidtion } from '../validation'
+import { phonenumber, password } from './Login'
 import OTP from '../components/OTP'
 import PhoneInput from '../core/PhoneInput'
 import Input from '../core/Input'
-import SignUpSvg from '../assests/signup.svg'
 import Button from '../core/Button'
 import Anchor from '../core/Anchor'
-import { store } from '../App'
-import { useNavigate } from 'react-router-dom'
-
-import { loginValidtion } from '../validation'
-import { phonenumber, password } from './Login'
-import { RegisterAsProfessional } from '../api'
 import UnProtected from '../Unprotected'
 import Logo from '../core/Logo'
 import Select from '../core/SelectInput'
+import { RegisterAsProfessional } from '../api/Authenciation'
 
 export default function ProfessionalRegister() {
 
-    document.title = 'Professional Register'
+    document.title = 'Professional  Register'
     const storeState = useContext(store) ?? false
+
     const navigate = useNavigate()
     const [isOpen, setisOpen] = useState(false)
 
@@ -33,20 +35,23 @@ export default function ProfessionalRegister() {
 
     const successFunction = async () => {
         const api = await RegisterAsProfessional(form.values)
-        switch (api) {
+        switch (api.status) {
             case 201:
                 setisOpen(false)
-                storeState.setstate(pre => ({ ...pre, isAuthenciated: true }))
-                setTimeout(() => {
-                    navigate(`/register-${form.values.as}`)
-                }, 1000);
+                const apiRes = await api.json
+                storeState.setstate(pre => ({ ...pre, user: apiRes, isAuthenciated: true }))
+                storeState.setmessage({
+                    hidden: false,
+                    message: 'Redirecting'
+                })
+                navigate(`/register-${form.values.as}`)
                 break;
             case 400:
                 setisOpen(false)
                 form.setErrors({ phone: 'User already exists' })
                 break;
             default:
-                navigate(`/${api}`)
+                navigate(`/${api.status}`)
                 break;
         }
     }
@@ -87,7 +92,7 @@ const as = {
     label: 'Register As',
     required: true,
     list: [
-        { name: "--- Select ---", value: '' },
+        { name: "Select From List", value: '' },
         { name: "Service Provider", value: 'service' },
         { name: "Product Seller", value: 'product' },
     ]

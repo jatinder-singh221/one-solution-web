@@ -43,7 +43,11 @@ export default function Registerservice() {
         }
     }, [navigate, storeState])
 
-    useEffect(() => { onLoad() }, [onLoad])
+    useEffect(() => { 
+        setTimeout(() => {
+            onLoad()
+        }, 1000);
+    }, [onLoad])
 
 
     const productform = useFormik({
